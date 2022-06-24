@@ -5,7 +5,7 @@
 using namespace std;
 using namespace eosio;
 
-CONTRACT waxstarter : public contract {
+CONTRACT miniblenderx : public contract {
    public:
     using contract::contract;
 

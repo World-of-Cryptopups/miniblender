@@ -1,6 +1,6 @@
-#include <waxstarter.hpp>
+#include <miniblenderx.hpp>
 
-ACTION waxstarter::sayhi(name user, string message) {
+ACTION miniblenderx::sayhi(name user, string message) {
     require_auth(user);
 
     // save data to blockchain
