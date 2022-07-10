@@ -16,10 +16,7 @@ module.exports = {
 
     // NOTE: Add the lines below if you want to add a google font
     fontFamily: {
-      sans: [
-        // '"name of google font"', // your google name font
-        ...defaultTheme.fontFamily.sans
-      ]
+      sans: ['Inter', ...defaultTheme.fontFamily.sans]
     },
     extend: {}
   },

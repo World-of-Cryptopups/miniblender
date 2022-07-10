@@ -8,7 +8,7 @@ type SeoProps = {
 const Seo = ({ title, description }: SeoProps) => {
   return (
     <NextSeo
-      title={`${title} | Amazing Website!`}
+      title={`${title} | World of Cryptopups`}
       description={description}
       openGraph={{
         description
