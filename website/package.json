@@ -9,12 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@cryptopuppie/next-waxauth": "^0.2.0",
     "@headlessui/react": "^1.6.6",
     "@heroicons/react": "^1.0.6",
     "next": "^12.2.0",
     "next-seo": "^5.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-toastify": "^9.0.5",
     "swr": "^1.3.0"
   },
   "devDependencies": {
