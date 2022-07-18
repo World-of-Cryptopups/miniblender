@@ -19,6 +19,9 @@ const Header = () => {
           <li className="font-medium text-gray-700 hover:text-indigo-500 hover:underline">
             <LinkButton href="/">Blends</LinkButton>
           </li>
+          <li className="font-medium text-gray-700 hover:text-indigo-500 hover:underline ml-16">
+            <LinkButton href="/creator">Creator</LinkButton>
+          </li>
 
           <li className="ml-16">
             {isLoggedIn ? (
