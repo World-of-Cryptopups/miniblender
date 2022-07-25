@@ -1,21 +1,30 @@
 import { useWaxUser } from '@cryptopuppie/next-waxauth';
-import { ICollection } from '@cryptopuppie/useatomicassets/dist/typings/typings/atomicassets-js';
-import { PlusCircleIcon } from '@heroicons/react/solid';
+import { ICollection, useGetCollectionName } from '@cryptopuppie/useatomicassets';
 import Error from 'next/error';
-import { LinkButton } from '../../../components/LinkButton';
+import { useRouter } from 'next/router';
 import Seo from '../../../components/Seo';
+import CreatorBlendProvider from '../../../contexts/blend-provider';
 import DefaultLayout from '../../../layouts/Default';
+import NewBlendModal from '../../blends/new';
 import CollectionPageHeader from './header';
+
+import { ATOMICASSETS_ENDPOINT } from '../../../lib/config';
 
 interface CreatorPageProps {
   data: ICollection;
 }
 
-const CreatorPage = ({ data }: CreatorPageProps) => {
+const CreatorPage = ({ data: iData }: CreatorPageProps) => {
+  const router = useRouter();
+  const { name } = router.query;
+
   const { user } = useWaxUser();
+  const { data } = useGetCollectionName(Array.isArray(name) ? name.join('') : name, {
+    initialData: iData
+  });
 
   if (!data) {
-    return <></>;
+    return <>{ATOMICASSETS_ENDPOINT}</>;
   }
 
   if (!data.authorized_accounts.includes(user?.wallet ?? '')) {
@@ -28,28 +37,19 @@ const CreatorPage = ({ data }: CreatorPageProps) => {
 
   return (
     <DefaultLayout>
-      <Seo title={`${data.name} - creator`} />
+      <CreatorBlendProvider collection={data}>
+        <Seo title={`${data.name} - creator`} />
 
-      <div className="w-5/6 mx-auto mt-16">
-        <CollectionPageHeader
-          data={data.data}
-          collection={data.collection_name}
-          name={data.name}
-          author={data.author}
-        />
+        <div className="w-5/6 mx-auto mt-16">
+          <CollectionPageHeader />
 
-        <hr className="my-12" />
+          <hr className="my-12" />
 
-        <div className="grid grid-cols-4 gap-6">
-          <LinkButton
-            href={`/creator/${data.collection_name}/new-blend`}
-            className="h-56 border p-6 rounded-lg flex items-center justify-center bg-gray-100 flex-col text-center"
-          >
-            <PlusCircleIcon className="h-8 w-8 text-gray-700" />
-            <span className="text-lg font-bold text-gray-700">add new blend</span>
-          </LinkButton>
+          <div className="grid grid-cols-4 gap-6">
+            <NewBlendModal collection={data.collection_name} name={data.name} />
+          </div>
         </div>
-      </div>
+      </CreatorBlendProvider>
     </DefaultLayout>
   );
 };
