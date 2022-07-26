@@ -3,15 +3,29 @@ import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { Fragment, useState } from 'react';
 import { useCreatorBlend } from '../../../contexts/blend-provider';
+import { IngredientProps } from '../ingredients';
+import { useBlendProvider } from '../provider';
 
 const SelectSchemaOption = () => {
   const { collection } = useCreatorBlend();
+  const { dispatchIngredients } = useBlendProvider();
 
   const [selectedSchema, setSelectedSchema] = useState<ISchema | undefined>(undefined);
 
   const { data: schemas } = useGetSchemas(
     collection ? { collection_name: collection.collection_name } : undefined
   );
+
+  const addIngredient = () => {
+    if (!selectedSchema) return;
+
+    const ingredient: IngredientProps = {
+      type: 'schema',
+      schema: selectedSchema.schema_name
+    };
+
+    dispatchIngredients({ type: 'add', data: ingredient });
+  };
 
   return (
     <div>
@@ -94,8 +108,12 @@ const SelectSchemaOption = () => {
       </div>
 
       <div className="text-center">
-        <button className="text-sm py-3 px-8 rounded-lg bg-indigo-400 hover:bg-indigo-500 text-white font-medium">
-          Create Blend
+        <button
+          type="button"
+          onClick={addIngredient}
+          className="text-sm py-3 px-8 rounded-lg bg-indigo-400 hover:bg-indigo-500 text-white font-medium"
+        >
+          Add Ingredient
         </button>
       </div>
     </div>

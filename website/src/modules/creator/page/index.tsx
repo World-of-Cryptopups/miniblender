@@ -8,8 +8,6 @@ import DefaultLayout from '../../../layouts/Default';
 import NewBlendModal from '../../blends/new';
 import CollectionPageHeader from './header';
 
-import { ATOMICASSETS_ENDPOINT } from '../../../lib/config';
-
 interface CreatorPageProps {
   data: ICollection;
 }
@@ -24,7 +22,7 @@ const CreatorPage = ({ data: iData }: CreatorPageProps) => {
   });
 
   if (!data) {
-    return <>{ATOMICASSETS_ENDPOINT}</>;
+    return <></>;
   }
 
   if (!data.authorized_accounts.includes(user?.wallet ?? '')) {
@@ -46,7 +44,7 @@ const CreatorPage = ({ data: iData }: CreatorPageProps) => {
           <hr className="my-12" />
 
           <div className="grid grid-cols-4 gap-6">
-            <NewBlendModal collection={data.collection_name} name={data.name} />
+            <NewBlendModal />
           </div>
         </div>
       </CreatorBlendProvider>

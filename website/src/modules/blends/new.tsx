@@ -3,20 +3,16 @@ import { BeakerIcon, PlusCircleIcon } from '@heroicons/react/solid';
 import { useState } from 'react';
 import BaseModal from '../../components/Modal';
 import NewBlendFormContainer from './form';
+import BlendProvider from './provider';
 
-interface NewBlendModalProps {
-  collection: string;
-  name: string;
-}
-
-const NewBlendModal = ({ collection, name }: NewBlendModalProps) => {
+const NewBlendModal = () => {
   const [open, setOpen] = useState(false);
 
   const openModal = () => setOpen(true);
   const closeModal = () => setOpen(false);
 
   return (
-    <>
+    <BlendProvider>
       <button
         type="button"
         onClick={openModal}
@@ -39,7 +35,7 @@ const NewBlendModal = ({ collection, name }: NewBlendModalProps) => {
 
         <NewBlendFormContainer />
       </BaseModal>
-    </>
+    </BlendProvider>
   );
 };
 

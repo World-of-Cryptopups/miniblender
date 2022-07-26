@@ -8,9 +8,12 @@ import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { Fragment, useEffect, useState } from 'react';
 import { useCreatorBlend } from '../../../contexts/blend-provider';
+import { IngredientProps } from '../ingredients';
+import { useBlendProvider } from '../provider';
 
 const SelectAttributesOption = () => {
   const { collection } = useCreatorBlend();
+  const { dispatchIngredients } = useBlendProvider();
 
   const [selectedSchema, setSelectedSchema] = useState<ISchema | undefined>(undefined);
   const [keyAttribs, setKeyAttribs] = useState<string[]>([]);
@@ -44,6 +47,21 @@ const SelectAttributesOption = () => {
     }
 
     return keys;
+  };
+
+  const addIngredient = () => {
+    if (!selectedSchema || !selectedKeyAttrib || attribValue === '') return;
+
+    const ingredient: IngredientProps = {
+      type: 'attribute',
+      schema: selectedSchema.schema_name,
+      attribute: {
+        key: selectedKeyAttrib,
+        value: attribValue
+      }
+    };
+
+    dispatchIngredients({ type: 'add', data: ingredient });
   };
 
   useEffect(() => {
@@ -219,8 +237,12 @@ const SelectAttributesOption = () => {
       </div>
 
       <div className="text-center">
-        <button className="text-sm py-3 px-8 rounded-lg bg-indigo-400 hover:bg-indigo-500 text-white font-medium">
-          Create Blend
+        <button
+          type="button"
+          onClick={addIngredient}
+          className="text-sm py-3 px-8 rounded-lg bg-indigo-400 hover:bg-indigo-500 text-white font-medium"
+        >
+          Add Ingredient
         </button>
       </div>
     </div>

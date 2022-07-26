@@ -2,10 +2,14 @@ import { ISchema, ITemplate, useGetSchemas, useGetTemplates } from '@cryptopuppi
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { Fragment, useEffect, useState } from 'react';
+import PreviewNFT from '../../../components/PreviewNFT';
 import { useCreatorBlend } from '../../../contexts/blend-provider';
+import { IngredientProps } from '../ingredients';
+import { useBlendProvider } from '../provider';
 
 const SelectTemplateOption = () => {
   const { collection } = useCreatorBlend();
+  const { dispatchIngredients } = useBlendProvider();
 
   const [selectedSchema, setSelectedSchema] = useState<ISchema | undefined>(undefined);
   const [selectedTemplate, setSelectedTemplate] = useState<ITemplate | undefined>(undefined);
@@ -19,6 +23,18 @@ const SelectTemplateOption = () => {
       ? { collection_name: collection.collection_name, schema_name: selectedSchema.schema_name }
       : undefined
   );
+
+  const addIngredient = () => {
+    if (!selectedSchema || !selectedTemplate?.template_id) return;
+
+    const ingredient: IngredientProps = {
+      type: 'template',
+      schema: selectedSchema.schema_name,
+      template: Number(selectedTemplate.template_id)
+    };
+
+    dispatchIngredients({ type: 'add', data: ingredient });
+  };
 
   useEffect(() => {
     if (selectedSchema) {
@@ -150,11 +166,17 @@ const SelectTemplateOption = () => {
         </Listbox>
       </div>
 
-      <div className="h-72">{/* TODO: preview the nft in here */}</div>
+      <div className="h-72 flex items-center justify-center">
+        <PreviewNFT data={selectedTemplate?.immutable_data} style="h-56 w-56" />
+      </div>
 
       <div className="text-center">
-        <button className="text-sm py-3 px-8 rounded-lg bg-indigo-400 hover:bg-indigo-500 text-white font-medium">
-          Create Blend
+        <button
+          type="button"
+          onClick={addIngredient}
+          className="text-sm py-3 px-8 rounded-lg bg-indigo-400 hover:bg-indigo-500 text-white font-medium"
+        >
+          Add Ingredient
         </button>
       </div>
     </div>
