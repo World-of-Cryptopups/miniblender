@@ -1,4 +1,5 @@
 import { useGetTemplateID } from '@cryptopuppie/useatomicassets';
+import { XCircleIcon } from '@heroicons/react/solid';
 import PreviewNFT from '../../../components/PreviewNFT';
 import { useCreatorBlend } from '../../../contexts/blend-provider';
 import { AttributeIngredient, SchemaIngredient, TemplateIngredient } from '../ingredients';
@@ -6,12 +7,21 @@ import { useBlendProvider } from '../provider';
 import IngredientsModal from './modals';
 
 const IngredientsContainer = () => {
-  const { ingredients } = useBlendProvider();
+  const { ingredients, dispatchIngredients } = useBlendProvider();
 
   return (
     <div className="my-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
       {ingredients.map((i, index) => (
-        <div className="h-72 w-56 mx-auto flex items-center justify-center" key={index}>
+        <div className="h-72 w-56 relative mx-auto flex items-center justify-center" key={index}>
+          <button
+            title="Remove ingredient"
+            className="absolute z-50 -top-1 -right-1 bg-red-400 hover:bg-red-500 text-white rounded-lg duration-500"
+            type="button"
+            onClick={() => dispatchIngredients({ type: 'remove', index })}
+          >
+            <XCircleIcon className="h-7 w-7 p-1" />
+          </button>
+
           {i.type === 'template' ? (
             <TemplateIngredientContainer data={i} />
           ) : i.type === 'schema' ? (
