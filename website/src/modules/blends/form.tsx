@@ -1,4 +1,5 @@
 import IngredientsContainer from './ingredients/container';
+import TargetsContainer from './targets/container';
 
 const NewBlendFormContainer = () => {
   return (
@@ -7,6 +8,14 @@ const NewBlendFormContainer = () => {
         <h4 className="font-bold text-gray-700">Ingredients</h4>
 
         <IngredientsContainer />
+      </div>
+
+      <hr className="my-4" />
+
+      <div>
+        <h4 className="font-bold text-gray-700">Targets</h4>
+
+        <TargetsContainer />
       </div>
     </div>
   );
