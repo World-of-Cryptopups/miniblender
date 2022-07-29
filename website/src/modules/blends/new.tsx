@@ -2,8 +2,10 @@ import { Dialog } from '@headlessui/react';
 import { BeakerIcon, PlusCircleIcon } from '@heroicons/react/solid';
 import { useState } from 'react';
 import BaseModal from '../../components/Modal';
+import CreateBlendButton from './create-blend';
 import NewBlendFormContainer from './form';
 import BlendProvider from './provider';
+import BlendSettingsButton from './settings/button';
 
 const NewBlendModal = () => {
   const [open, setOpen] = useState(false);
@@ -23,13 +25,21 @@ const NewBlendModal = () => {
       </button>
 
       <BaseModal className="max-w-6xl" isOpen={open} closeModal={closeModal}>
-        <Dialog.Title
-          as="h3"
-          className="leading-6 inline-flex items-center text-xl font-bold text-gray-700"
-        >
-          <BeakerIcon className="h-7 w-7 mr-2" />
-          Create New Blend
-        </Dialog.Title>
+        <div className="flex items-center justify-between">
+          <Dialog.Title
+            as="h3"
+            className="leading-6 inline-flex items-center text-xl font-bold text-gray-700"
+          >
+            <BeakerIcon className="h-7 w-7 mr-2" />
+            Create New Blend
+          </Dialog.Title>
+
+          <div className="inline-flex items-center">
+            <BlendSettingsButton />
+
+            <CreateBlendButton />
+          </div>
+        </div>
 
         <hr className="my-8" />
 

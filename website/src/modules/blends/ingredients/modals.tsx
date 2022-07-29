@@ -32,9 +32,9 @@ const IngredientsModal = () => {
     <>
       <button
         onClick={openModal}
-        className="flex items-center flex-col justify-center h-72 w-56 mx-auto border rounded-lg p-6 bg-gray-100 hover-bg-gray-200 text-gray-600"
+        className="flex items-center flex-col justify-center h-72 w-56 mx-auto border rounded-lg p-6 bg-gray-100 hover:bg-gray-200 duration-300 text-gray-600 text-sm"
       >
-        <PlusIcon className="h-8 w-8 mb-1" />
+        <PlusIcon className="h-6 w-6 mb-1" />
         add new ingredient
       </button>
 
