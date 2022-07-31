@@ -3,35 +3,40 @@
 using namespace eosio;
 using namespace std;
 
-struct SlotBlendSchemaIngredient
-{
+struct BlendSchemaIngredient {
     name schema;
 };
 
-struct SlotBlendTemplateIngredient
-{
-    vector<uint32_t> templates;
+struct BlendTemplateIngredient {
+    name schema;
+    uint64_t templateId;
 };
 
-struct SlotBlendAttribValuesIngredient
-{
+struct BlendAttribIngredient {
+    name schema;
     string key;
-    vector<string> allowed_values;
+    string value;
 };
 
-struct SlotBlendAttribIngredient
-{
-    name schema;
-    bool require_all_attribs;
-    vector<SlotBlendAttribValuesIngredient> attributes;
-};
+typedef std::variant<BlendSchemaIngredient, BlendTemplateIngredient, BlendAttribIngredient> BlendIngredientProps;
 
-typedef std::variant<SlotBlendSchemaIngredient, SlotBlendTemplateIngredient, SlotBlendAttribIngredient> SlotBlendIngredientProps;
-
-struct SlotBlendIngredient
-{
+struct BlendIngredient {
     uint8_t type;
     name collection;
-    uint32_t amount;
-    SlotBlendIngredientProps props;
+    BlendIngredientProps data;
+};
+
+struct BlendTarget {
+    name collection;
+    uint64_t templateId;
+    uint64_t chance;
+};
+
+struct BlendConfig {
+    uint64_t limit;
+    uint64_t userlimit;
+
+    /* TODO: to be implemented in the future */
+    // uint64_t startdate;
+    // uint64_t enddate;
 };
