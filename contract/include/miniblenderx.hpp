@@ -76,6 +76,11 @@ CONTRACT miniblenderx : public contract {
     void validate_blendconfig(BlendConfig blend_config);
 
     /**
+     * Validate blend ingredients.
+     */
+    void validate_ingredients(name collection, vector<BlendIngredient> ingredients);
+
+    /**
      * Validate target blends.
      */
     void validate_targets(name collection, vector<BlendTarget> targets);

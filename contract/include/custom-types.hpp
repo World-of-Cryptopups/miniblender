@@ -8,8 +8,7 @@ struct BlendSchemaIngredient {
 };
 
 struct BlendTemplateIngredient {
-    name schema;
-    uint64_t templateId;
+    uint64_t template_id;
 };
 
 struct BlendAttribIngredient {
@@ -22,14 +21,12 @@ typedef std::variant<BlendSchemaIngredient, BlendTemplateIngredient, BlendAttrib
 
 struct BlendIngredient {
     uint8_t type;
-    name collection;
     BlendIngredientProps data;
 };
 
 struct BlendTarget {
-    name collection;
-    uint64_t templateId;
-    uint64_t chance;
+    uint64_t template_id;
+    uint64_t odds;
 };
 
 struct BlendConfig {

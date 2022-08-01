@@ -17,7 +17,14 @@ ACTION miniblenderx::createblend(name author, name collection, vector<BlendIngre
     // check if authorized author
     check(isAuthorized(collection, author), "Author is not authorized by the collection!");
 
+    // validate the blend config
     validate_blendconfig(blend_config);
+
+    // validate the ingredients
+    validate_ingredients(collection, ingredients);
+
+    // validate the targets
+    validate_targets(collection, targets);
 
     auto _blends = get_blends(collection);
 
@@ -26,6 +33,14 @@ ACTION miniblenderx::createblend(name author, name collection, vector<BlendIngre
     uint64_t blenderid = current_config.blendcounter++;
     config.set(current_config, get_self());
 
+    // create blendlimit
+    auto _blendlimits = get_blendlimits(collection);
+    _blendlimits.emplace(author, [&](blendlimits_s &row) {
+        row.current_limit = blend_config.limit;
+        row.id = blenderid;
+    });
+
+    // create blend
     _blends.emplace(author, [&](blends_s &row) {
         row.id = blenderid;
         row.author = author;
